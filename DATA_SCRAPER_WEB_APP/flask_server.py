@@ -41,7 +41,7 @@ def send_message():
                 aux = dict()
                 for col in columns:
 
-                    if col == 'Company Name':
+                    if col == 'Entity Name':
 
                         name = bot.name_split()
                         aux.update({col : name})
