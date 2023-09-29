@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            MyProject
+        </title>
+        <link rel = 'stylesheet' href="styles.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    </head>
+    <body>
+         <div class = "imag">
+            
+            <h1>
+                <p class="text" >WELCOME, WELCOME, and again WELCOME to the web data colector ! ! ! 
+                    
+                </p>
+            </h1>
+            <div class="box">
+                <textarea class="inside-box" id= 'ssa' onchange="enable()" required placeholder="URL input...."  ></textarea>
+                <div class = 'ck'>
+                    <div>
+                        <input  type="checkbox" id = 'ck1'  >
+                        <label for="ck1" >Entity Name </label>
+
+                    </div>
+                    <div>
+                        <input  type="checkbox" id = 'ck2' >
+                        <label for="ck2" >Email </label>
+
+                    </div>
+                    <div>
+                        <input type="checkbox" id = 'ck3' >
+                        <label for="ck3" >Phone number </label>
+
+                    </div>
+                   
+                </div>
+                
+                <div class="buton_div" >
+                    <button disabled = true id = 'b' type="submit" class ='first_b' onclick="clic()">SEND</button>
+                </div>
+                <div id="download-link-container" style="display: none;">
+                    <a id="download-link" href="#" download="your_data.csv">Descarcă CSV</a>
+                </div>
+                <script>
+
+                        const ck1 = document.getElementById('ck1');
+                        const ck2 = document.getElementById('ck2');
+                        const ck3 = document.getElementById('ck3');
+                        const btn = document.getElementById('b');
+                        var msg = document.getElementById('ssa');
+                      
+                        msg.addEventListener('input', function(){
+                            enable()
+                            
+                        })
+
+                        function chk1(){
+                            if(ck1.checked && msg.value.trim() != ""){
+                                
+                                btn.disabled = false
+                                return 'Entity Name'
+                            }else if(ck1.checked === false && ck2.checked === false && ck3.checked ===false){
+                                btn.disabled = true
+                                
+                            }else if (ck1.checked === false)
+                            {
+                                return 'No name Value'
+                            }
+                        }
+                        function chk2(){
+                            if(ck2.checked && msg.value.trim() != ""){
+                                btn.disabled = false
+                                return 'Email'
+                            }else if(ck1.checked === false && ck2.checked === false && ck3.checked ===false){
+                                btn.disabled = true
+                                
+                            }else if (ck2.checked === false)
+                            {
+                                return 'No email Value'
+                            }
+                        }
+
+                        function chk3(){
+                            if(ck3.checked && msg.value.trim() != ""){
+                                btn.disabled = false
+                                return 'Phone number'
+                            }else if(ck1.checked === false && ck2.checked === false && ck3.checked ===false){
+                                btn.disabled = true
+                                
+                            }else if (ck3.checked === false)
+                            {
+                                return 'No phnoe nr Value'
+                            }
+                        
+                        }
+                        function enable(){
+                            if (msg.value.trim() === ""){
+                                btn.disabled = true
+                            }else{
+
+                                ck1.addEventListener('change', function(){
+                                    chk1()
+
+                                });
+                                ck2.addEventListener('change', function(){
+                                    chk2()
+
+                                });
+                                ck3.addEventListener('change', function(){
+                                    chk3()
+
+                                });
+                            }
+                        
+                        }           
+                    function clic(){
+                       
+                       var msg = document.getElementById('ssa');
+        
+                       Company_name = chk1()
+                       Email = chk2()
+                       Phone_nr = chk3()
+                       var message = msg.value
+                       icon = document.getElementById('iconID');
+                       icon.style.display = 'block';
+                       $.ajax({
+                          type: "POST",
+                          url: "http://127.0.0.1:5001/send_message", 
+                          data: { 'message': message, Company_name, Email, Phone_nr},
+                          success: function(response) {
+                             
+                            console.log("Răspuns de la server:", response);
+                            out_box = document.getElementById('ssb');
+                            out_box.value = response;
+                            //console.log(type(out_box.value))
+                            dwn_btn = document.getElementById('download_bt')
+                            // dwn_btn.disabled = false 
+                            // backk to initial
+                            icon.style.display = "none";
+                            if(out_box.value === 'No Data')
+                            {
+                                //dwn_btn = document.getElementById('download_bt')
+                                dwn_btn.disabled = true;
+                            }else{
+                                dwn_btn.disabled = false;
+                                const k1 = document.getElementById('ck1');
+                                k1.checked = false;
+                                const k2 = document.getElementById('ck2');
+                                k2.checked = false;
+                                const k3 = document.getElementById('ck3');
+                                k3.checked = false;
+                                const bt = document.getElementById('b');
+                                bt.disabled = true
+                                var ms = document.getElementById('ssa');
+                            }
+                           
+                          },
+                          error: function(error) {
+                            
+                              console.error("Eroare:", error);
+                          }
+                        });        
+                   
+                    }; 
+                
+                </script>
+            
+            </div>
+            <div class = 'output_box'>
+                <textarea class="inside-box" id = "ssb" placeholder="output..."></textarea>
+                <div class="buton_div" >
+                    <button disabled = true id = 'download_bt' type="submit" class ='first_b' onclick="download_csv()">DOWNLOAD CSV</button>
+                </div>
+
+            </div>
+            <div class = 'instructions_area'>
+                <h1 class="instructions_header">INSTRUCTIONS... </h1>
+                <p class="instructions_text">
+                    This app is helpful when you need to grab some contact data about specific entities. Those are automatically
+                    found on the Internet through their URL. You only need to enter them in the input box and then click on SEND Button. 
+                    After this operation, all the data is processed after your needs (check options) and compressed
+                    into a downloadable CSV file which can be saved on your computer by pressing the DOWNLOAD CSV button. Requirements:
+                    <p>1. Make sure you pass in valid URLs. Also, 'no-URL' text is useless; the app is designed to find and eliminate 
+                        no-URL formats. If no valid URL will be detected after pressing on SEND, no data will be received, and the DOWNLOAD icon will be 
+                        unavailable  </p>
+                    <p>2. The SEND icon will be unblocked if the next two conditions are accomplished : A. The input box may not be empty! B. At
+                        least one checkbox has to be marked! Please wait until the loading icon from the bottom disappears... </p>  
+                    <p>If everything works, the scraped data will appear on the output box an the csv document will be
+                        downloadable! Be aware of the fact that the more URLs you pass in, the longer will the loading time be!
+                    </p>  
+                    
+                </p>
+                
+            </div>
+            <script>
+                function download_csv(){
+                    var b = document.getElementById('ssb')
+                    text_dwn = b.value
+                    const blob = new Blob([text_dwn], {type: 'octet-stream'})
+                    const href = URL.createObjectURL(blob)
+
+                    const a = Object.assign(document.createElement('a'),{
+                        href : href,
+                        style : 'display:none', 
+                        download: 'from_app_data.csv'
+                    })
+
+                    document.body.appendChild(a)
+                    a.click()
+
+                    URL.revokeObjectURL(a)
+                    a.remove()
+                }
+            </script>
+             <div class = loadingDiv id="iconID">
+                <i class = "loadingICON">LOADING...</i>
+             </div>
+           
+         </div>
+    
+
+         </div>
+         
+
+           
+    </body>
+</html>

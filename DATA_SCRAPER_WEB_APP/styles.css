@@ -1,0 +1,106 @@
+.imag {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-image: linear-gradient(rgba(151, 190, 193, 0.772),rgba(171, 160, 88, 0.805)), url('poza.png');
+  background-position: center;
+  position: fixed;
+}
+
+.text {
+ text-align: center;
+ font-size: 30px;
+ color: black;
+ font-family:Bradley Hand ITC;
+ padding-top: 100px;
+}
+.box{
+ 
+ height: 350px;
+ width: 306;
+ margin: 0 auto;
+ position: absolute;
+ top : 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ box-sizing: content-box;
+}
+.inside-box{
+ height: 100px;
+ width: 300px;
+ border-radius: 10px;
+ text-align: left;
+ background-color:rgb(178, 223, 193);
+ resize: none;
+ 
+}
+.ck{
+ padding-top: 25px;
+}
+
+.first_b{
+ background-color: rgb(133, 203, 156);
+ color: black;
+ border-radius: 5px;
+ height: 50px;
+ width: 100px;
+ cursor: pointer;
+ 
+}
+.buton_div{
+ padding-top: 1px;
+ position: absolute;
+ top : 80%;
+ left: 30%;
+}
+
+.output_box{
+ height: 350px;
+ margin: 0 auto;
+ width: 306px;
+ position: absolute;
+ top : 50%;
+ left: 80%;
+ transform: translate(-50%, -50%);
+ box-sizing: content-box;
+
+
+}
+
+.instructions_area{
+ height: 350px;
+ width: 300px;
+ position: absolute;
+ top : 47%;
+ left: 20%;
+ transform: translate(-50%, -50%);
+ box-sizing: content-box;
+
+}
+.instructions_header{
+  text-align: left;
+  color: black;
+  font-family: Bradley Hand ITC;
+  font-size: 20px;
+  
+ 
+}
+.instructions_text{
+  text-align: left;
+  color: black;
+  font-family: Bahnshrift;
+  font-size: 15px;
+  width: 100%;
+  height: 45%;
+  
+}
+.loadingDiv{
+  position: fixed;
+  right: 2%;
+  bottom: 2%;
+  display:none;
+}
+.loadingICON{
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+}
